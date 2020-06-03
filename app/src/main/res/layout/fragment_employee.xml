@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EmployeeFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/employee_photo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        />
+
+    <TextView
+
+        android:id="@+id/employee_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_single"
+        android:layout_marginEnd="@dimen/margin_single"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/employee_photo"
+        android:textSize="@dimen/employee_name_text_size"
+        android:gravity="center_horizontal"
+        android:text="@string/employee_example_name" />
+
+    <RelativeLayout
+        android:id="@+id/employee_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/margin_single"
+        android:paddingEnd="@dimen/margin_single"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/employee_name"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/employee_title_title"
+            android:layout_width="@dimen/employee_info_title_width"
+            android:layout_height="wrap_content"
+            android:text="@string/employee_title_title"
+            android:textSize="@dimen/employee_info_text_size" />
+
+        <TextView
+            android:id="@+id/employee_title_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/employee_title_title"
+            android:layout_marginStart="@dimen/margin_half"
+            android:text="@string/employee_title_value_example"
+            android:textSize="@dimen/employee_info_text_size"
+
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/employee_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_single"
+        android:paddingStart="@dimen/margin_single"
+        android:paddingEnd="@dimen/margin_single"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/employee_title"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/employee_email_title"
+            android:layout_width="@dimen/employee_info_title_width"
+            android:layout_height="wrap_content"
+            android:text="@string/employee_email_title"
+            android:textSize="@dimen/employee_info_text_size" />
+
+        <TextView
+            android:id="@+id/employee_email_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/employee_email_title"
+            android:layout_marginStart="@dimen/margin_half"
+            android:text="@string/employee_title_value_example"
+            android:textSize="@dimen/employee_info_text_size"
+
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/employee_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/margin_single"
+        android:paddingEnd="@dimen/margin_single"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/employee_email"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/employee_phone_title"
+            android:layout_width="@dimen/employee_info_title_width"
+            android:layout_height="wrap_content"
+            android:text="@string/employee_phone_title"
+            android:textSize="@dimen/employee_info_text_size" />
+
+        <TextView
+            android:id="@+id/employee_phone_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/employee_phone_title"
+            android:layout_marginStart="@dimen/margin_half"
+            android:text="@string/employee_title_value_example"
+            android:textSize="@dimen/employee_info_text_size"
+
+            />
+    </RelativeLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,6 +7,7 @@ import android.content.SharedPreferences
 class MaximContactsApplication : Application() {
     companion object {
         lateinit var prefs: Prefs
+        val networkService = NetworkService()
     }
 
     override fun onCreate() {
@@ -37,5 +38,8 @@ class Prefs(context: Context) {
         }
         set(value) = prefs.edit().putString(PASSWORD_KEY, value).apply()
 
+    fun deleteAuth() {
+        prefs.edit().clear().apply()
+    }
 
 }

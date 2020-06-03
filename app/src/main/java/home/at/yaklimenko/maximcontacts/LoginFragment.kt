@@ -42,18 +42,19 @@ class LoginFragment : Fragment(), CoroutineScope {
 
     private fun performAuthCheck(login: Editable, password: Editable) {
         launch {
-            val httpClient = NetworkService()
+            val httpClient = MaximContactsApplication.networkService
             val res = withContext(Dispatchers.IO) {
                 httpClient.sendCheckAuthRequest(
                     login.toString(),
                     password.toString()
                 )
-            };
+            }
             if (res) {
                 MaximContactsApplication.prefs.login = login.toString()
                 MaximContactsApplication.prefs.password = password.toString()
                 Toast.makeText(activity, "Вход выполнен. Данные сохранены", Toast.LENGTH_LONG)
                     .show()
+                httpClient.useAuth(login.toString(), password.toString())
                 loadRootDepartmentFragment()
             } else {
                 Toast.makeText(activity, "Неправильный логин или пароль", Toast.LENGTH_LONG).show()

@@ -1,6 +1,9 @@
 package home.at.yaklimenko.maximcontacts
 
+import android.R
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
 
@@ -19,10 +22,28 @@ class MainActivity : AppCompatActivity() {
         if (needInit) init()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.menu_exit) {
+            MaximContactsApplication.prefs.deleteAuth()
+            init()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     fun init() {
         if (!MaximContactsApplication.prefs.hasAuth) {
             loadAuthFragment()
         } else {
+            MaximContactsApplication.networkService.useAuth(
+                MaximContactsApplication.prefs.login, MaximContactsApplication.prefs.password
+            )
             loadRootDepartmentFragment()
         }
         needInit = false;
@@ -38,9 +59,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadRootDepartmentFragment() {
         val departmentFragment = DepartmentFragment()
-        supportFragmentManager.popBackStack(null, POP_BACK_STACK_INCLUSIVE)
+        supportFragmentManager.popBackStack(LoginFragment.TAG, POP_BACK_STACK_INCLUSIVE)
         supportFragmentManager
             .beginTransaction()
+            .addToBackStack(getString(R.string.root_department_name))
             .replace(R.id.frame_box, departmentFragment, DepartmentFragment.TAG)
             .commit()
     }

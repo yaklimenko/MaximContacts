@@ -7,4 +7,13 @@
     <string name="login_edittext_hint">Логин</string>
     <string name="password_edittext_hint">Пароль</string>
     <string name="auth_button_hint">Войти</string>
+    <string name="progressbar_hint">Загрузка данных</string>
+    <string name="root_department_name">Главный департамент</string>
+    <string name="employee_example_name">Иванов Петр Сидорович Римский Корсаков Лорем Ипсум</string>
+    <string name="employee_title_title">Должность</string>
+    <string name="employee_title_value_example">Программист - аналитик восьмидесятого разряда</string>
+    <string name="employee_email_title">Email</string>
+    <string name="employee_phone_title">Телефон</string>
+    <string name="department_current_name_example">Длинное - предлинное имя департамента образования молодежи игре на старом баяне</string>
+    <string name="menu_exit">Выход</string>
 </resources>
