@@ -20,26 +20,38 @@ class Prefs(context: Context) {
     val PREFS_FILENAME = "home.at.yaklimenko.maximcontacts.prefs"
     val LOGIN_KEY = "login"
     val PASSWORD_KEY = "password"
-    val prefs: SharedPreferences = context.getSharedPreferences(PREFS_FILENAME, 0);
 
-    var hasAuth = prefs.contains(LOGIN_KEY)
+    private var loginMem : String? = null
+    private var passwordMem : String? = null
+    val prefs : SharedPreferences
 
-    var login: String
-        get() {
-            if (!prefs.contains(LOGIN_KEY)) throw IllegalStateException("no login stored")
-            return prefs.getString(LOGIN_KEY, "") ?: "";
+    init {
+        prefs = context.getSharedPreferences(PREFS_FILENAME, 0)
+        if (prefs.contains(LOGIN_KEY) && prefs.contains(PASSWORD_KEY) ) {
+            loginMem = prefs.getString(LOGIN_KEY, "") ?: ""
+            passwordMem = prefs.getString(PASSWORD_KEY, "") ?: ""
         }
-        set(value) = prefs.edit().putString(LOGIN_KEY, value).apply()
-
-    var password: String
-        get() {
-            if (!prefs.contains(PASSWORD_KEY)) throw IllegalStateException("no password stored")
-            return prefs.getString(PASSWORD_KEY, "") ?: "";
-        }
-        set(value) = prefs.edit().putString(PASSWORD_KEY, value).apply()
-
-    fun deleteAuth() {
-        prefs.edit().clear().apply()
     }
 
+    var hasAuth = loginMem != null && passwordMem != null
+
+    var login: String
+        get() = loginMem ?: ""
+        set(value) {
+            loginMem = value
+            prefs.edit().putString(LOGIN_KEY, value).apply()
+        }
+
+    var password: String
+        get() = passwordMem ?: ""
+        set(value) {
+            passwordMem = value
+            prefs.edit().putString(PASSWORD_KEY, value).apply()
+        }
+
+    fun deleteAuth() {
+        loginMem = null
+        passwordMem = null
+        prefs.edit().clear().apply()
+    }
 }

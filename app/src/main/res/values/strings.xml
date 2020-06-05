@@ -16,4 +16,6 @@
     <string name="employee_phone_title">Телефон</string>
     <string name="department_current_name_example">Длинное - предлинное имя департамента образования молодежи игре на старом баяне</string>
     <string name="menu_exit">Выход</string>
+    <string name="login_login">test_user</string>
+    <string name="login_pass">test_pass</string>
 </resources>

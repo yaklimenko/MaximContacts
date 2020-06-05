@@ -3,6 +3,7 @@ package home.at.yaklimenko.maximcontacts
 import android.os.Bundle
 import android.text.Editable
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -19,13 +20,22 @@ class LoginFragment : Fragment(), CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        setHasOptionsMenu(true)
+        super.onCreate(savedInstanceState)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         job = Job()
         return inflater.inflate(R.layout.fragment_login, container, false)
+    }
 
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        menu.findItem(R.id.menu_exit).setVisible(false)
+        super.onPrepareOptionsMenu(menu)
     }
 
     override fun onResume() {

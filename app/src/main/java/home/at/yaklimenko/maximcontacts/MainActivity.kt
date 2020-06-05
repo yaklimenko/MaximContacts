@@ -1,15 +1,15 @@
 package home.at.yaklimenko.maximcontacts
 
-import android.R
+
+
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
 
 
 class MainActivity : AppCompatActivity() {
-
     var needInit = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        Log.d(TAG,"onOptionsItemSelected")
         if (item.itemId == R.id.menu_exit) {
             MaximContactsApplication.prefs.deleteAuth()
             init()
@@ -46,20 +47,26 @@ class MainActivity : AppCompatActivity() {
             )
             loadRootDepartmentFragment()
         }
-        needInit = false;
+        needInit = false
     }
 
     private fun loadAuthFragment() {
         val loginFragment = LoginFragment()
+        for (i in 0 until supportFragmentManager.getBackStackEntryCount()) {
+            supportFragmentManager.popBackStack()
+        }
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.frame_box, loginFragment, LoginFragment.TAG)
             .commit()
+
     }
 
     private fun loadRootDepartmentFragment() {
         val departmentFragment = DepartmentFragment()
-        supportFragmentManager.popBackStack(LoginFragment.TAG, POP_BACK_STACK_INCLUSIVE)
+        for (i in 0 until supportFragmentManager.getBackStackEntryCount()) {
+            supportFragmentManager.popBackStack()
+        }
         supportFragmentManager
             .beginTransaction()
             .addToBackStack(getString(R.string.root_department_name))
@@ -67,4 +74,16 @@ class MainActivity : AppCompatActivity() {
             .commit()
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        Log.d(TAG, "onBackPressed. BackStack: ${supportFragmentManager.backStackEntryCount}")
+        if (supportFragmentManager.backStackEntryCount == 0) {
+           System.exit(0)
+        }
+
+    }
+
+    companion object {
+        val TAG = MainActivity::class.simpleName
+    }
 }
