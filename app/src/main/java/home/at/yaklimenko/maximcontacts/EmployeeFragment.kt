@@ -65,6 +65,7 @@ class EmployeeFragment : Fragment(R.layout.fragment_employee), CoroutineScope {
 
     companion object {
         private const val ARG_EMPLOYEE = "employee"
+
         @JvmStatic
         fun newInstance(employee: Employee) =
             EmployeeFragment().apply {

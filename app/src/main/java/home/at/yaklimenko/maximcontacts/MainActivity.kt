@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     }
 
     private fun clearBackStack() {
-        for (i in 0 until supportFragmentManager.getBackStackEntryCount()) {
+        for (i in 0 until supportFragmentManager.backStackEntryCount) {
             supportFragmentManager.popBackStack()
         }
     }

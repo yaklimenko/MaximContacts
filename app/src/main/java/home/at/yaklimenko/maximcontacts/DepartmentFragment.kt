@@ -32,7 +32,7 @@ class DepartmentFragment : Fragment(R.layout.fragment_department), CoroutineScop
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {
-        menu.findItem(R.id.menu_exit).setVisible(true)
+        menu.findItem(R.id.menu_exit).isVisible = true
         super.onPrepareOptionsMenu(menu)
     }
 
