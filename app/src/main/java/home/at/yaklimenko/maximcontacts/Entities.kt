@@ -2,9 +2,6 @@ package home.at.yaklimenko.maximcontacts
 
 import org.json.JSONObject
 
-val setOfIds = HashSet<Int>()
-var entitiesCount = 0
-
 class AuthCheckResponse(json: String) : JSONObject(json) {
     val message = optString("Message")
     val success = getBoolean("Success")
@@ -14,7 +11,6 @@ abstract class Contact {
     abstract val id: Int
     abstract val name: String
 }
-
 
 class Department(json: String? = null, jsonObject: JSONObject? = null) : Contact() {
     var jsonObj: JSONObject = json?.let { JSONObject(it) } ?: jsonObject!!

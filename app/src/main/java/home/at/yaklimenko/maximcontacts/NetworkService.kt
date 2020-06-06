@@ -17,7 +17,7 @@ class NetworkService {
         auth = "login=$login&password=$password"
     }
 
-    fun sendCheckAuthRequest(login: String, password: String): Boolean {
+    fun sendCheckAuthRequest(login: String, password: String): AuthCheckResponse {
         val path = "Contacts.svc/Hello"
         val checkAuth = "login=$login&password=$password"
 
@@ -30,7 +30,7 @@ class NetworkService {
             authRes = AuthCheckResponse(String(response))
             Log.d("HttpClient", "authRes : ${authRes.success}")
         }
-        return authRes.success
+        return authRes
     }
 
     private fun HttpURLConnection.readResponse(): StringBuffer {

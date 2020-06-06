@@ -1,7 +1,6 @@
 package home.at.yaklimenko.maximcontacts
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.View
 import android.widget.Toast
@@ -63,7 +62,6 @@ class DepartmentFragment : Fragment(R.layout.fragment_department), CoroutineScop
     }
 
     private fun showList(department: Department) {
-        Log.d(TAG, "counters: unique ids:${setOfIds.size} overall entities:${entitiesCount}")
         val clickListener: View.OnClickListener = View.OnClickListener {
             val tag = it.tag
             when (tag) {

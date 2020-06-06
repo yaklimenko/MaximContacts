@@ -50,7 +50,7 @@ class LoginFragment : Fragment(R.layout.fragment_login), CoroutineScope {
                     password.toString()
                 )
             }
-            if (res) {
+            if (res.success) {
                 MaximContactsApplication.prefs.login = login.toString()
                 MaximContactsApplication.prefs.password = password.toString()
                 Toast.makeText(activity, getString(R.string.toast_auth_success), Toast.LENGTH_SHORT)
@@ -58,7 +58,7 @@ class LoginFragment : Fragment(R.layout.fragment_login), CoroutineScope {
                 httpClient.useAuth(login.toString(), password.toString())
                 loadRootDepartmentFragment()
             } else {
-                Toast.makeText(activity, getString(R.string.toast_auth_failed), Toast.LENGTH_SHORT)
+                Toast.makeText(activity, res.message, Toast.LENGTH_SHORT)
                     .show()
 
             }
@@ -73,6 +73,7 @@ class LoginFragment : Fragment(R.layout.fragment_login), CoroutineScope {
         )
         activity?.supportFragmentManager
             ?.beginTransaction()
+            ?.addToBackStack("0")
             ?.replace(R.id.frame_box, departmentFragment, DepartmentFragment.TAG)
             ?.commit()
     }

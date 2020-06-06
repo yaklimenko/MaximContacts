@@ -71,8 +71,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
         Log.d(TAG, "onBackPressed. BackStack: ${supportFragmentManager.backStackEntryCount}")
+        super.onBackPressed()
         if (supportFragmentManager.backStackEntryCount == 0) {
             exitProcess(0)
         }
