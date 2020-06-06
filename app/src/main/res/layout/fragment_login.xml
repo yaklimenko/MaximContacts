@@ -15,9 +15,10 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="@dimen/margin_double"
         android:text="@string/app_title"
-        android:textSize="@dimen/app_title_text_size"/>
+        android:textSize="@dimen/app_title_text_size" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_double"
@@ -31,37 +32,28 @@
             android:id="@+id/login_edittext"
             android:layout_width="300dp"
             android:layout_height="50dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             android:hint="@string/login_edittext_hint"
             android:inputType="text"
             android:text="@string/login_login"
-            android:textSize="27sp"/>
+            android:textSize="27sp" />
 
         <EditText
             android:id="@+id/password_edittext"
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:layout_marginTop="@dimen/margin_single"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/login_edittext"
             android:hint="@string/password_edittext_hint"
             android:inputType="textPassword"
             android:text="@string/login_pass"
-            android:textSize="27sp"/>
+            android:textSize="27sp" />
 
         <Button
             android:id="@+id/auth_button"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_single"
-            app:layout_constraintTop_toBottomOf="@id/password_edittext"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             android:text="@string/auth_button_hint"
-            android:textSize="20sp"/>
+            android:textSize="20sp" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

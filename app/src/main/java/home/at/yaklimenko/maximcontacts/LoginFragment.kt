@@ -2,10 +2,8 @@ package home.at.yaklimenko.maximcontacts
 
 import android.os.Bundle
 import android.text.Editable
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -14,7 +12,7 @@ import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
 
-class LoginFragment : Fragment(), CoroutineScope {
+class LoginFragment : Fragment(R.layout.fragment_login), CoroutineScope {
     private lateinit var job: Job
 
     override val coroutineContext: CoroutineContext
@@ -22,32 +20,25 @@ class LoginFragment : Fragment(), CoroutineScope {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setHasOptionsMenu(true)
+        job = Job()
         super.onCreate(savedInstanceState)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        job = Job()
-        return inflater.inflate(R.layout.fragment_login, container, false)
-    }
-
-    override fun onPrepareOptionsMenu(menu: Menu) {
-        menu.findItem(R.id.menu_exit).setVisible(false)
-        super.onPrepareOptionsMenu(menu)
-    }
-
-    override fun onResume() {
-        super.onResume()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         auth_button.setOnClickListener {
             if (login_edittext.text.isEmpty() || password_edittext.text.isEmpty()) {
-                Toast.makeText(context, "Логин и пароль не должны быть пустыми", Toast.LENGTH_LONG)
+                Toast.makeText(context, getString(R.string.toast_empty_auth), Toast.LENGTH_SHORT)
                     .show()
             } else {
                 performAuthCheck(login_edittext.text, password_edittext.text)
             }
         }
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        menu.findItem(R.id.menu_exit).isVisible = false
+        super.onPrepareOptionsMenu(menu)
     }
 
     private fun performAuthCheck(login: Editable, password: Editable) {
@@ -62,12 +53,13 @@ class LoginFragment : Fragment(), CoroutineScope {
             if (res) {
                 MaximContactsApplication.prefs.login = login.toString()
                 MaximContactsApplication.prefs.password = password.toString()
-                Toast.makeText(activity, "Вход выполнен. Данные сохранены", Toast.LENGTH_LONG)
+                Toast.makeText(activity, getString(R.string.toast_auth_success), Toast.LENGTH_SHORT)
                     .show()
                 httpClient.useAuth(login.toString(), password.toString())
                 loadRootDepartmentFragment()
             } else {
-                Toast.makeText(activity, "Неправильный логин или пароль", Toast.LENGTH_LONG).show()
+                Toast.makeText(activity, getString(R.string.toast_auth_failed), Toast.LENGTH_SHORT)
+                    .show()
 
             }
         }
@@ -75,19 +67,19 @@ class LoginFragment : Fragment(), CoroutineScope {
 
     private fun loadRootDepartmentFragment() {
         val departmentFragment = DepartmentFragment()
-        activity!!.supportFragmentManager.popBackStack(
+        activity?.supportFragmentManager?.popBackStack(
             null,
             FragmentManager.POP_BACK_STACK_INCLUSIVE
         )
-        activity!!.supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.frame_box, departmentFragment, DepartmentFragment.TAG)
-            .commit()
+        activity?.supportFragmentManager
+            ?.beginTransaction()
+            ?.replace(R.id.frame_box, departmentFragment, DepartmentFragment.TAG)
+            ?.commit()
     }
 
-    override fun onDestroyView() {
+    override fun onDestroy() {
         job.cancel()
-        super.onDestroyView()
+        super.onDestroy()
     }
 
 

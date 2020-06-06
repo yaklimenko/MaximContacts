@@ -9,9 +9,7 @@ import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
 
-class NetworkService(
-
-) {
+class NetworkService {
     lateinit var auth: String
     val domain = "https://contact.taxsee.com/"
 
@@ -66,7 +64,7 @@ class NetworkService(
 
     fun getEmpoyeePhoto(id: Int): Bitmap {
         val path = "Contacts.svc/GetWPhoto"
-        val url = URL("$domain$path?$auth&id=$id");
+        val url = URL("$domain$path?$auth&id=$id")
         val bitmap: Bitmap
         with(url.openConnection() as HttpURLConnection) {
             Log.d("HttpClient", "URL : $url")
@@ -77,7 +75,5 @@ class NetworkService(
         return bitmap
 
     }
-
-
 }
 

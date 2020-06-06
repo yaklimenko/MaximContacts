@@ -11,11 +11,15 @@
     <string name="root_department_name">Главный департамент</string>
     <string name="employee_example_name">Иванов Петр Сидорович Римский Корсаков Лорем Ипсум</string>
     <string name="employee_title_title">Должность</string>
-    <string name="employee_title_value_example">Программист - аналитик восьмидесятого разряда</string>
     <string name="employee_email_title">Email</string>
     <string name="employee_phone_title">Телефон</string>
     <string name="department_current_name_example">Длинное - предлинное имя департамента образования молодежи игре на старом баяне</string>
+
+
     <string name="menu_exit">Выход</string>
     <string name="login_login">test_user</string>
     <string name="login_pass">test_pass</string>
+    <string name="toast_empty_auth">Логин и пароль не должны быть пустыми</string>
+    <string name="toast_auth_success">Вход выполнен. Данные сохранены</string>
+    <string name="toast_auth_failed">Неправильный логин или пароль</string>
 </resources>

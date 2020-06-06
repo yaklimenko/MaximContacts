@@ -1,10 +1,9 @@
 package home.at.yaklimenko.maximcontacts
 
 import android.os.Bundle
-import android.view.LayoutInflater
+import android.util.Log
 import android.view.Menu
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_FADE
@@ -13,10 +12,7 @@ import kotlinx.coroutines.*
 import org.json.JSONObject
 import kotlin.coroutines.CoroutineContext
 
-
-private const val ARG_DEPARTMENT = "department"
-
-class DepartmentFragment : Fragment(), CoroutineScope {
+class DepartmentFragment : Fragment(R.layout.fragment_department), CoroutineScope {
 
     private lateinit var job: Job
 
@@ -32,16 +28,8 @@ class DepartmentFragment : Fragment(), CoroutineScope {
             department = Department(jsonObject = JSONObject(it))
         }
         setHasOptionsMenu(true)
-        super.onCreate(savedInstanceState)
-
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
         job = Job()
-        return inflater.inflate(R.layout.fragment_department, container, false)
+        super.onCreate(savedInstanceState)
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {
@@ -51,7 +39,6 @@ class DepartmentFragment : Fragment(), CoroutineScope {
 
     override fun onResume() {
         super.onResume()
-
         if (department == null) {
             launch {
                 val network = MaximContactsApplication.networkService
@@ -76,30 +63,38 @@ class DepartmentFragment : Fragment(), CoroutineScope {
     }
 
     private fun showList(department: Department) {
+        Log.d(TAG, "counters: unique ids:${setOfIds.size} overall entities:${entitiesCount}")
         val clickListener: View.OnClickListener = View.OnClickListener {
-            if (it.tag is Department) {
-                val dep = it.tag as Department
+            val tag = it.tag
+            when (tag) {
+                is Department -> {
+                    if (tag.contacts.isEmpty()) {
+                        Toast.makeText(activity, "Этот департамент пуст", Toast.LENGTH_SHORT).show()
+                    } else {
 
-                if (dep.contacts.isEmpty()) {
-                    Toast.makeText(activity, "Этот департамент пуст", Toast.LENGTH_SHORT).show()
-                } else {
+                        activity?.supportFragmentManager?.beginTransaction()
+                            ?.addToBackStack(tag.id.toString())
+                            ?.setTransition(TRANSIT_FRAGMENT_FADE)
+                            ?.replace(R.id.frame_box, newInstance(tag))
+                            ?.commit()
+                    }
+                }
+                is Employee -> {
                     activity?.supportFragmentManager?.beginTransaction()
-                        ?.addToBackStack(dep.id.toString())
+                        ?.addToBackStack("Employee")
                         ?.setTransition(TRANSIT_FRAGMENT_FADE)
-                        ?.replace(R.id.frame_box, newInstance(dep))
+                        ?.replace(R.id.frame_box, EmployeeFragment.newInstance(tag))
                         ?.commit()
                 }
-            } else if (it.tag is Employee) {
-                val emp = it.tag as Employee
-                activity?.supportFragmentManager?.beginTransaction()
-                    ?.addToBackStack(emp.id.toString())
-                    ?.setTransition(TRANSIT_FRAGMENT_FADE)
-                    ?.replace(R.id.frame_box, EmployeeFragment.newInstance(emp))
-                    ?.commit()
             }
         }
         departmen_list.adapter =
             ContactListAdapter(department.contacts, layoutInflater, clickListener)
+    }
+
+    override fun onDestroy() {
+        job.cancel()
+        super.onDestroy()
     }
 
     private fun hideLoading() {
@@ -107,13 +102,9 @@ class DepartmentFragment : Fragment(), CoroutineScope {
         progressbar_hint?.visibility = View.GONE
     }
 
-    override fun onDestroyView() {
-        job.cancel()
-        super.onDestroyView()
-    }
-
     companion object {
         val TAG = DepartmentFragment::class.simpleName
+        private const val ARG_DEPARTMENT = "department"
 
         @JvmStatic
         fun newInstance(department: Department) =

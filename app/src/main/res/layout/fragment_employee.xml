@@ -14,7 +14,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-
         />
 
     <TextView
@@ -31,12 +30,14 @@
         android:gravity="center_horizontal"
         android:text="@string/employee_example_name" />
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/employee_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="@dimen/margin_single"
-        android:paddingEnd="@dimen/margin_single"
+        android:paddingStart="@dimen/margin_half"
+        android:paddingEnd="@dimen/margin_half"
+        android:orientation="horizontal"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/employee_name"
@@ -44,30 +45,35 @@
 
         <TextView
             android:id="@+id/employee_title_title"
-            android:layout_width="@dimen/employee_info_title_width"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:gravity="end"
             android:text="@string/employee_title_title"
-            android:textSize="@dimen/employee_info_text_size" />
+            android:textSize="@dimen/employee_info_text_size"
+            android:layout_marginEnd="@dimen/margin_half" />
 
         <TextView
             android:id="@+id/employee_title_value"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/employee_title_title"
+            android:layout_weight="0.5"
             android:layout_marginStart="@dimen/margin_half"
-            android:text="@string/employee_title_value_example"
+            android:text="@string/department_current_name_example"
             android:textSize="@dimen/employee_info_text_size"
 
-            />
-    </RelativeLayout>
 
-    <RelativeLayout
+            />
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/employee_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_single"
-        android:paddingStart="@dimen/margin_single"
-        android:paddingEnd="@dimen/margin_single"
+        android:paddingStart="@dimen/margin_half"
+        android:paddingEnd="@dimen/margin_half"
+        android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/employee_title"
@@ -75,29 +81,33 @@
 
         <TextView
             android:id="@+id/employee_email_title"
-            android:layout_width="@dimen/employee_info_title_width"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:layout_marginEnd="@dimen/margin_half"
+            android:gravity="end"
             android:text="@string/employee_email_title"
             android:textSize="@dimen/employee_info_text_size" />
 
         <TextView
             android:id="@+id/employee_email_value"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/employee_email_title"
+            android:layout_weight="0.5"
             android:layout_marginStart="@dimen/margin_half"
-            android:text="@string/employee_title_value_example"
+            android:text="@string/department_current_name_example"
             android:textSize="@dimen/employee_info_text_size"
 
             />
-    </RelativeLayout>
+    </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/employee_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/margin_single"
         android:paddingEnd="@dimen/margin_single"
+        android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/employee_email"
@@ -105,22 +115,23 @@
 
         <TextView
             android:id="@+id/employee_phone_title"
-            android:layout_width="@dimen/employee_info_title_width"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:gravity="end"
             android:text="@string/employee_phone_title"
             android:textSize="@dimen/employee_info_text_size" />
 
         <TextView
             android:id="@+id/employee_phone_value"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/employee_phone_title"
+            android:layout_weight="0.5"
             android:layout_marginStart="@dimen/margin_half"
-            android:text="@string/employee_title_value_example"
             android:textSize="@dimen/employee_info_text_size"
 
             />
-    </RelativeLayout>
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

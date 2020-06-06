@@ -3,9 +3,12 @@ package home.at.yaklimenko.maximcontacts
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
+import home.at.yaklimenko.maximcontacts.MaximContactsApplication.Companion.TAG
 
 class MaximContactsApplication : Application() {
     companion object {
+        val TAG = MaximContactsApplication::class.simpleName
         lateinit var prefs: Prefs
         val networkService = NetworkService()
     }
@@ -21,13 +24,16 @@ class Prefs(context: Context) {
     val LOGIN_KEY = "login"
     val PASSWORD_KEY = "password"
 
-    private var loginMem : String? = null
-    private var passwordMem : String? = null
-    val prefs : SharedPreferences
+    @Volatile
+    private var loginMem: String? = null
+
+    @Volatile
+    private var passwordMem: String? = null
+    val prefs: SharedPreferences
 
     init {
         prefs = context.getSharedPreferences(PREFS_FILENAME, 0)
-        if (prefs.contains(LOGIN_KEY) && prefs.contains(PASSWORD_KEY) ) {
+        if (prefs.contains(LOGIN_KEY) && prefs.contains(PASSWORD_KEY)) {
             loginMem = prefs.getString(LOGIN_KEY, "") ?: ""
             passwordMem = prefs.getString(PASSWORD_KEY, "") ?: ""
         }
@@ -52,6 +58,7 @@ class Prefs(context: Context) {
     fun deleteAuth() {
         loginMem = null
         passwordMem = null
+        Log.d(TAG, "cleared auth")
         prefs.edit().clear().apply()
     }
 }

@@ -2,6 +2,9 @@ package home.at.yaklimenko.maximcontacts
 
 import org.json.JSONObject
 
+val setOfIds = HashSet<Int>()
+var entitiesCount = 0
+
 class AuthCheckResponse(json: String) : JSONObject(json) {
     val message = optString("Message")
     val success = getBoolean("Success")
@@ -12,19 +15,19 @@ abstract class Contact {
     abstract val name: String
 }
 
+
 class Department(json: String? = null, jsonObject: JSONObject? = null) : Contact() {
     var jsonObj: JSONObject = json?.let { JSONObject(it) } ?: jsonObject!!
-
-    override val id = jsonObj.getInt("ID")
+    override val id = jsonObj.getString("ID").toInt()
     override val name = jsonObj.getString("Name")
 
-    val departments = jsonObj.optJSONArray("Departments")
+    private val departments = jsonObj.optJSONArray("Departments")
         ?.let { 0.until(it.length()).map { i -> it.optJSONObject(i) } }
         ?.map {
             Department(jsonObject = it)
         }
 
-    val empoyees = jsonObj.optJSONArray("Employees")
+    private val empoyees = jsonObj.optJSONArray("Employees")
         ?.let { 0.until(it.length()).map { i -> it.optJSONObject(i) } }
         ?.map { Employee(jsonObject = it) }
 
@@ -40,7 +43,7 @@ class Department(json: String? = null, jsonObject: JSONObject? = null) : Contact
 }
 
 class Employee(val jsonObject: JSONObject) : Contact() {
-    override val id = jsonObject.getInt("ID")
+    override val id = jsonObject.getString("ID").toInt()
     override val name = jsonObject.getString("Name")
     val title = jsonObject.optString("Title")
     val email = jsonObject.optString("Email")

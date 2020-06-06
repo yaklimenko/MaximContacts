@@ -2,18 +2,14 @@ package home.at.yaklimenko.maximcontacts
 
 import android.graphics.Bitmap
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_employee.*
 import kotlinx.coroutines.*
 import org.json.JSONObject
 import kotlin.coroutines.CoroutineContext
 
-private const val ARG_EMPLOYEE = "employee"
-
-class EmployeeFragment : Fragment(), CoroutineScope {
+class EmployeeFragment : Fragment(R.layout.fragment_employee), CoroutineScope {
 
     private lateinit var job: Job
     private lateinit var employee: Employee
@@ -27,13 +23,6 @@ class EmployeeFragment : Fragment(), CoroutineScope {
         arguments?.getString(ARG_EMPLOYEE)?.let {
             employee = Employee(JSONObject(it))
         }
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_employee, container, false)
     }
 
     override fun onResume() {
@@ -50,22 +39,23 @@ class EmployeeFragment : Fragment(), CoroutineScope {
             employee_photo.setImageBitmap(bitmap)
         }
 
-        employee_name.text = employee.name
-        employee.title?.let {
-            employee_title_value.text = it
-            employee_title.visibility = View.VISIBLE
-        }
+        with(employee) {
+            employee_name.text = name
+            if (title.isNotEmpty()) {
+                employee_title_value.text = title
+                employee_title.visibility = View.VISIBLE
+            }
 
-        employee.phone?.let {
-            employee_phone_value.text = it
-            employee_phone.visibility = View.VISIBLE
-        }
+            if (phone.isNotEmpty()) {
+                employee_phone_value.text = phone
+                employee_phone.visibility = View.VISIBLE
+            }
 
-        employee.email?.let {
-            employee_email_value.text = it
-            employee_email.visibility = View.VISIBLE
+            if (email.isNotEmpty()) {
+                employee_email_value.text = email
+                employee_email.visibility = View.VISIBLE
+            }
         }
-
     }
 
     override fun onDestroyView() {
@@ -74,6 +64,7 @@ class EmployeeFragment : Fragment(), CoroutineScope {
     }
 
     companion object {
+        private const val ARG_EMPLOYEE = "employee"
         @JvmStatic
         fun newInstance(employee: Employee) =
             EmployeeFragment().apply {
