@@ -11,7 +11,6 @@ import kotlinx.coroutines.*
 import org.json.JSONObject
 import kotlin.coroutines.CoroutineContext
 
-
 class EmployeeFragment : Fragment(R.layout.fragment_employee), CoroutineScope {
 
     private lateinit var job: Job
